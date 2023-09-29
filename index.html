@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body id="body">
+    <h1 class="text-orange-700 text-4xl">hello world</h1>
+    <button class="text-white rounded-lg bg-blue-700 p-2">click me</button>
+
+
+    <!-- DOM MANIPULATION -->
+    <ul id="element" data="valid">    <!--data is user defined attribute-->
+        <li class="list-item">first element</li>
+        <li class="list-item">second element</li>
+        <li class="list-item">third element</li>
+    </ul>
+    <table>
+        <tr>
+            <td>one</td>
+            <td>two</td>
+        </tr>
+        <tr>
+            <td>three</td>
+            <td>four</td>
+        </tr>
+    </table>
+
+    <!-- API -->
+    <div id="dogImage"><img src="" alt=""></div>
+
+    
+    <script src="dom_manipulation.js"></script>
+    <script src="script.js"></script>   <!--always at the last-->
+
+
+    <!-- ques to change the color of external links except internal.com -->
+    <a name="list">The list:</a>
+  <ul>
+    <li><a href="http://google.com">http://google.com</a></li>
+    <li><a href="/tutorial">/tutorial.html</a></li>
+    <li><a href="local/path">local/path</a></li>
+    <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+    <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+    <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+  </ul>
+
+  <script>
+    let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
+    let links = document.querySelectorAll(selector);
+
+    links.forEach(link => link.style.color = 'orange');
+  </script>
+
+
+  <!--  ADDING EVENTS -->
+  <!-- the last event overrides the other events in case of same tag -->
+  <button id="clickBtn" onclick="alert('Hello world')">Click Me</button>
+  <!-- or -->
+  <script>
+    clickBtn.onclick=function(){
+        alert('hello world')
+    }
+    // or
+    function callMe(){
+        alert('hello world')
+    }
+    clickBtn.onclick= callMe
+
+    // better method
+    clickBtn.addEventListener('click',callMe)   //event name,function name
+
+    clickBtn.removeEventListener('click',callMe)  //remove events
+
+  </script>
+
+
+
+</body>
+</html>
+
+
+
