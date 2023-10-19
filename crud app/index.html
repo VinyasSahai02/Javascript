@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script> 
+</head>
+<body> 
+      <main>
+        <section class="bg-white dark:bg-gray-900">
+            <div class="px-6 py-16 mx-auto text-center w-64">
+                <div class="flex flex-col mt-8 space-y-3 sm:space-y-0 sm:flex-row sm:justify-center sm:-mx-2">
+                    <input id="email" type="text" class="form-control px-4 py-2 text-gray-700 bg-white border rounded-md sm:mx-2 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40" placeholder="Add Item">       
+                    <button id="btn" class="px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-700 rounded-md sm:mx-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                        Add
+                    </button>
+                </div>
+                <ul id="parentList" class="mt-8 border-gray-600 border flex flex-col divide-y divide-gray-600">
+                  <li class="list-item">
+                    <h3 class="heading">Chapter 1</h3>
+                    <button class="bg-red-600 rounded-md" onclick="removeChapter(this)">remove</button>
+                    <button class="bg-yellow-500 rounded-md" onclick="editChapter(this)">edit</button>
+                  </li>
+                </ul>
+            </div>
+        </section>
+      </main>
+
+      <script>
+        let addBtn=document.getElementById('btn')
+        addBtn.addEventListener('click',addChapter)
+        let parentList=document.getElementById('parentList')
+        function addChapter(e){    //e->event
+          if(parentList.children[0].className=='emptyMsg'){
+            parentList.children[0].remove()
+          }
+          let currentBtn=e.currentTarget;
+          let currentInput=currentBtn.previousElementSibling    //grabbing the input typed to add it in the list
+          let currentChapter=currentInput.value
+          
+          let newLi=document.createElement('Li')
+          newLi.classList.add('list-item')
+          newLi.innerHTML= `<h3 class="heading">${currentChapter}</h3>
+                    <button class="bg-red-600 rounded-md" onclick="removeChapter(this)">remove</button>
+                    <button class="bg-yellow-500 rounded-md" onclick="editChapter(this)">edit</button>`  //creating a new list elemnet
+          parentList.appendChild(newLi)    //adding the new list element in the unordered list
+        }
+
+        function removeChapter(currElement){
+          currElement.parentElement.remove()
+          let parentList=document.getElementById('parentList')
+          if(parentList.children.length<=0){
+            let newEmptyMsg=document.createElement('h3')
+            newEmptyMsg.classList.add('emptyMsg')
+            newEmptyMsg.textContent='nothing is here.add something'
+            parentList.appendChild(newEmptyMsg)
+          }
+        }
+
+        function editChapter(currElement){
+          if(currElement.textContent=="done"){
+          currElement.textContent="edit"
+          let currChapterName=currElement.previousElementSibling.value
+          let currHeading=document.createElement('h3');
+          currHeading.className='heading'
+          currHeading.textContent=currChapterName
+          currElement.parentElement.replaceChild(currHeading,currElement.previousElementSibling)
+          }
+          else{
+          currElement.textContent="done"
+          let currChapterName=currElement.previousElementSibling.textContent
+          let currInput=document.createElement('input');
+          currInput.type='text'
+          currInput.placeholder='chapter name'
+          currInput.id='email'
+          // currInput.className='form-control px-4 py-2 text-gray-700 bg-white border rounded-md sm:mx-2 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40" placeholder="Add Item"'
+          currInput.value=currChapterName; 
+
+          currElement.parentElement.replaceChild(currInput,currElement.previousElementSibling)
+          }
+        }
+      </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
